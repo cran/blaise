@@ -1,11 +1,11 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 library(blaise)
 
-## ----create datafiles----------------------------------------------------
+## ----create datafiles---------------------------------------------------------
 model1 = "
   DATAMODEL Test
   FIELDS
@@ -48,43 +48,43 @@ writeLines(model1, con = blafile1)
 writeLines(data2, con = datafile2)
 writeLines(model2, con = blafile2)
 
-## ----read datafile-------------------------------------------------------
+## ----read datafile------------------------------------------------------------
 df = read_fwf_blaise(datafile1, blafile1)
 df
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 df_comma = read_fwf_blaise(datafile2, blafile2)
 df_comma
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 readr::problems(df_comma)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 df_comma = read_fwf_blaise(datafile2, blafile2, locale = readr::locale(decimal_mark = ","))
 df_comma
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 df_enum = read_fwf_blaise(datafile2, blafile2, locale = readr::locale(decimal_mark = ","), numbered_enum = FALSE)
 df_enum
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 df_laf = read_fwf_blaise(datafile1, blafile1, output = "laf")
 df_laf
 df_laf$E
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 outfile = tempfile(fileext = ".asc")
 outbla = sub(".asc", ".bla", outfile)
 write_fwf_blaise(df, outfile)
 readr::read_lines(outfile)
 readr::read_lines(outbla)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 outfile_model = tempfile(fileext = ".asc")
 write_fwf_blaise_with_model(df_enum, outfile_model, blafile2)
 readr::read_lines(outfile_model)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 model3 = "
   DATAMODEL Test
   FIELDS
@@ -98,7 +98,7 @@ outfile_new_model = tempfile(fileext = ".asc")
 write_fwf_blaise_with_model(df_enum, outfile_new_model, blafile3)
 readr::read_lines(outfile_new_model)
 
-## ---- error=TRUE---------------------------------------------------------
+## ---- error=TRUE--------------------------------------------------------------
 model4 = "
   DATAMODEL Test
   FIELDS
