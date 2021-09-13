@@ -12,7 +12,7 @@
 
 <meta name="author" content="Sjoerd Ophof" />
 
-<meta name="date" content="2021-06-04" />
+<meta name="date" content="2021-09-10" />
 
 <title>Introduction to blaise</title>
 
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">Introduction to blaise</h1>
 <h4 class="author">Sjoerd Ophof</h4>
-<h4 class="date">2021-06-04</h4>
+<h4 class="date">2021-09-10</h4>
 
 
 
@@ -207,13 +207,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>If you try to read the second datafile with model you will however get some warnings and the resulting dataframe will not look as expected.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_comma <span class="ot">=</span> <span class="fu">read_fwf_blaise</span>(datafile2, blafile2)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: 9 parsing failures.</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; row col               expected actual                                                                           file</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1   C no trailing characters   2,3  &#39;C:\Users\kingmob\AppData\Local\Temp\RtmpyG8HpG\testdata22f0216d0a.asc&#39;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1   D no trailing characters   0,1  &#39;C:\Users\kingmob\AppData\Local\Temp\RtmpyG8HpG\testdata22f0216d0a.asc&#39;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1   G no trailing characters   1,00 &#39;C:\Users\kingmob\AppData\Local\Temp\RtmpyG8HpG\testdata22f0216d0a.asc&#39;</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   2   C no trailing characters   3,4  &#39;C:\Users\kingmob\AppData\Local\Temp\RtmpyG8HpG\testdata22f0216d0a.asc&#39;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   2   D no trailing characters   1,2  &#39;C:\Users\kingmob\AppData\Local\Temp\RtmpyG8HpG\testdata22f0216d0a.asc&#39;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ... ... ...................... ...... ..............................................................................</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; row col               expected actual                                                                              file</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1   C no trailing characters   2,3  &#39;C:\Users\kingmob\AppData\Local\Temp\RtmpAzoQB8\testdata2170029b3128c.asc&#39;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1   D no trailing characters   0,1  &#39;C:\Users\kingmob\AppData\Local\Temp\RtmpAzoQB8\testdata2170029b3128c.asc&#39;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1   G no trailing characters   1,00 &#39;C:\Users\kingmob\AppData\Local\Temp\RtmpAzoQB8\testdata2170029b3128c.asc&#39;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   2   C no trailing characters   3,4  &#39;C:\Users\kingmob\AppData\Local\Temp\RtmpAzoQB8\testdata2170029b3128c.asc&#39;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   2   D no trailing characters   1,2  &#39;C:\Users\kingmob\AppData\Local\Temp\RtmpAzoQB8\testdata2170029b3128c.asc&#39;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ... ... ...................... ...... .................................................................................</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; See problems(...) for more details.</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>df_comma</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 x 7</span></span>
@@ -264,7 +264,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_laf <span class="ot">=</span> <span class="fu">read_fwf_blaise</span>(datafile1, blafile1, <span class="at">output =</span> <span class="st">&quot;laf&quot;</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_laf</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Connection to fixed width ASCII file</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Filename: C:\Users\kingmob\AppData\Local\Temp\RtmpyG8HpG\testdata12f01fe465ff.asc</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Filename: C:\Users\kingmob\AppData\Local\Temp\RtmpAzoQB8\testdata117003f9f19a0.asc</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Column 1: name = A, type = string, internal type = character, column width = 1</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Column 2: name = B, type = integer, internal type = integer, column width = 1</span></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Column 3: name = C, type = double, internal type = numeric, column width = 3</span></span>
@@ -274,7 +274,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Column 7: name = G, type = double, internal type = numeric, column width = 6</span></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>df_laf<span class="sc">$</span>E</span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Column number 5 of fixed width ASCII file</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Filename: C:\Users\kingmob\AppData\Local\Temp\RtmpyG8HpG\testdata12f01fe465ff.asc</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Filename: C:\Users\kingmob\AppData\Local\Temp\RtmpAzoQB8\testdata117003f9f19a0.asc</span></span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Column name = E</span></span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Column type = integer</span></span>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Internal type = integer</span></span>
