@@ -68,8 +68,8 @@ find_names = function(names, model, max.distance){
 
 cast_type = function(var, original){
   # cast dates to string
-  if(class(original) == 'Date' & type(var) == 'STRING') {
-    return(as.character.Date(original, format = '%Y%m%d'))
+  if(inherits(original, 'Date') & type(var) == 'STRING') {
+    return(format(original, format = '%Y%m%d'))
   }
 
   # Numbered ENUMS
