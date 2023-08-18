@@ -12,7 +12,7 @@
 
 <meta name="author" content="Sjoerd Ophof" />
 
-<meta name="date" content="2022-10-07" />
+<meta name="date" content="2023-08-18" />
 
 <title>Introduction to blaise</title>
 
@@ -340,7 +340,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Introduction to blaise</h1>
 <h4 class="author">Sjoerd Ophof</h4>
-<h4 class="date">2022-10-07</h4>
+<h4 class="date">2023-08-18</h4>
 
 
 
@@ -358,104 +358,104 @@ afterwards.</p>
 <h2>Reading a blaise datafile with model</h2>
 <p>For the purpose of this vignette we need to create some small
 examples.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">=</span> <span class="st">&quot;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">  DATAMODEL Test</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">  FIELDS</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">  A     : STRING[1]</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">  B     : INTEGER[1]</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">  C     : REAL[3,1]</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">  D     : REAL[3]</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">  E     : (Male, Female)</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">  F     : 1..20</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">  G     : 1.00..100.00</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">  ENDMODEL</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">  &quot;</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">=</span> <span class="st">&quot;</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">  DATAMODEL Test</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st">  FIELDS</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">  A     : STRING[1]</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="st">  B     : INTEGER[1]</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="st">  C     : REAL[3,1]</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="st">  D     : REAL[3]</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st">  E     : (Male (1), Female (2), Unknown (9))</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="st">  F     : 1..20</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="st">  G     : 1.00..100.00</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="st">  ENDMODEL</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="st">  &quot;</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">=</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;A12.30.11 1  1.00</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="st">B23.41.2210 20.20</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="st">C34.50.0120100.00&quot;</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>data2 <span class="ot">=</span> </span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;A12,30,11 1  1,00</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="st">B23,41,2210 20,20</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="st">C34,50,0920100,00&quot;</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>blafile1 <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="st">&#39;testbla1&#39;</span>, <span class="at">fileext =</span> <span class="st">&#39;.bla&#39;</span>)</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>datafile1 <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="st">&#39;testdata1&#39;</span>, <span class="at">fileext =</span> <span class="st">&#39;.asc&#39;</span>)</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>blafile2 <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="st">&#39;testbla2&#39;</span>, <span class="at">fileext =</span> <span class="st">&#39;.bla&#39;</span>)</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>datafile2 <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="st">&#39;testdata2&#39;</span>, <span class="at">fileext =</span> <span class="st">&#39;.asc&#39;</span>)</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(data1, <span class="at">con =</span> datafile1)</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(model1, <span class="at">con =</span> blafile1)</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(data2, <span class="at">con =</span> datafile2)</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(model2, <span class="at">con =</span> blafile2)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>model1 <span class="ot">=</span> <span class="st">&quot;</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="st">  DATAMODEL Test</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="st">  FIELDS</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="st">  A     : STRING[1]</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="st">  B     : INTEGER[1]</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="st">  C     : REAL[3,1]</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="st">  D     : REAL[3]</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="st">  E     : (Male, Female)</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="st">  F     : 1..20</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="st">  G     : 1.00..100.00</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="st">  ENDMODEL</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="st">  &quot;</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>model2 <span class="ot">=</span> <span class="st">&quot;</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="st">  DATAMODEL Test</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="st">  FIELDS</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="st">  A     : STRING[1]</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="st">  B     : INTEGER[1]</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="st">  C     : REAL[3,1]</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="st">  D     : REAL[3]</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="st">  E     : (Male (1), Female (2), Unknown (9))</span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="st">  F     : 1..20</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="st">  G     : 1.00..100.00</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="st">  ENDMODEL</span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="st">  &quot;</span></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a>data1 <span class="ot">=</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="st">&quot;A12.30.11 1  1.00</span></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="st">B23.41.2210 20.20</span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="st">C34.50.0120100.00&quot;</span></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a>data2 <span class="ot">=</span> </span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a><span class="st">&quot;A12,30,11 1  1,00</span></span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a><span class="st">B23,41,2210 20,20</span></span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a><span class="st">C34,50,0920100,00&quot;</span></span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a>blafile1 <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="st">&#39;testbla1&#39;</span>, <span class="at">fileext =</span> <span class="st">&#39;.bla&#39;</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a>datafile1 <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="st">&#39;testdata1&#39;</span>, <span class="at">fileext =</span> <span class="st">&#39;.asc&#39;</span>)</span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a>blafile2 <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="st">&#39;testbla2&#39;</span>, <span class="at">fileext =</span> <span class="st">&#39;.bla&#39;</span>)</span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a>datafile2 <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="st">&#39;testdata2&#39;</span>, <span class="at">fileext =</span> <span class="st">&#39;.asc&#39;</span>)</span>
+<span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a><span class="fu">writeLines</span>(data1, <span class="at">con =</span> datafile1)</span>
+<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a><span class="fu">writeLines</span>(model1, <span class="at">con =</span> blafile1)</span>
+<span id="cb1-40"><a href="#cb1-40" tabindex="-1"></a><span class="fu">writeLines</span>(data2, <span class="at">con =</span> datafile2)</span>
+<span id="cb1-41"><a href="#cb1-41" tabindex="-1"></a><span class="fu">writeLines</span>(model2, <span class="at">con =</span> blafile2)</span></code></pre></div>
 <p>These file can then be simply read to a dataframe by using
 <code>read_fwf_blaise</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">read_fwf_blaise</span>(datafile1, blafile1)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 7</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   A         B     C     D E          F     G</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;  &lt;int&gt; &lt;dbl&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 A         1   2.3   0.1 Male       1   1  </span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 B         2   3.4   1.2 Female    10  20.2</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 C         3   4.5   0   Male      20 100</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">read_fwf_blaise</span>(datafile1, blafile1)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>df</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 7</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt;   A         B     C     D E          F     G</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;  &lt;int&gt; &lt;dbl&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; 1 A         1   2.3   0.1 Male       1   1  </span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; 2 B         2   3.4   1.2 Female    10  20.2</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; 3 C         3   4.5   0   Male      20 100</span></span></code></pre></div>
 <div id="resolving-reading-issues" class="section level3">
 <h3>Resolving reading issues</h3>
 <p>If you try to read the second datafile with model you will however
 get some warnings and the resulting dataframe will not look as
 expected.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_comma <span class="ot">=</span> <span class="fu">read_fwf_blaise</span>(datafile2, blafile2)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: One or more parsing issues, call `problems()` on your data frame for details,</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; e.g.:</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   dat &lt;- vroom(...)</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   problems(dat)</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>df_comma</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 7</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   A         B     C     D E         F     G</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt; &lt;int&gt; &lt;dbl&gt;</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 A         1    NA    NA 1         1    NA</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 B         2    NA    NA 2        10    NA</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 C         3    NA    NA 9        20    NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>df_comma <span class="ot">=</span> <span class="fu">read_fwf_blaise</span>(datafile2, blafile2)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; Warning: One or more parsing issues, call `problems()` on your data frame for details,</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; e.g.:</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt;   dat &lt;- vroom(...)</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt;   problems(dat)</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>df_comma</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 7</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt;   A         B     C     D E         F     G</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt; &lt;int&gt; &lt;dbl&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; 1 A         1    NA    NA 1         1    NA</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt; 2 B         2    NA    NA 2        10    NA</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; 3 C         3    NA    NA 9        20    NA</span></span></code></pre></div>
 <p>The blaise package uses readr to actually read the file into memory.
 Reading problems can therefore be analysed by using
 <code>readr::problems()</code></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">problems</span>(df_comma)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9 × 5</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     row   col expected actual file                                    </span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;                                   </span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     1     3 a double 2,3    /tmp/RtmpnRzJMW/testdata2266292dd6f6.asc</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     1     3 a double 3,4    /tmp/RtmpnRzJMW/testdata2266292dd6f6.asc</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     1     3 a double 4,5    /tmp/RtmpnRzJMW/testdata2266292dd6f6.asc</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     1     4 a double 0,1    /tmp/RtmpnRzJMW/testdata2266292dd6f6.asc</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5     1     4 a double 1,2    /tmp/RtmpnRzJMW/testdata2266292dd6f6.asc</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6     1     4 a double 0,0    /tmp/RtmpnRzJMW/testdata2266292dd6f6.asc</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7     1     7 a double 1,00   /tmp/RtmpnRzJMW/testdata2266292dd6f6.asc</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8     1     7 a double 20,20  /tmp/RtmpnRzJMW/testdata2266292dd6f6.asc</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9     1     7 a double 100,00 /tmp/RtmpnRzJMW/testdata2266292dd6f6.asc</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">problems</span>(df_comma)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9 × 5</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt;     row   col expected actual file                                     </span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;                                    </span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; 1     1     3 a double 2,3    /tmp/RtmpA7fICs/testdata214805bb4bb83.asc</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; 2     1     3 a double 3,4    /tmp/RtmpA7fICs/testdata214805bb4bb83.asc</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; 3     1     3 a double 4,5    /tmp/RtmpA7fICs/testdata214805bb4bb83.asc</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; 4     1     4 a double 0,1    /tmp/RtmpA7fICs/testdata214805bb4bb83.asc</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; 5     1     4 a double 1,2    /tmp/RtmpA7fICs/testdata214805bb4bb83.asc</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; 6     1     4 a double 0,0    /tmp/RtmpA7fICs/testdata214805bb4bb83.asc</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; 7     1     7 a double 1,00   /tmp/RtmpA7fICs/testdata214805bb4bb83.asc</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; 8     1     7 a double 20,20  /tmp/RtmpA7fICs/testdata214805bb4bb83.asc</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; 9     1     7 a double 100,00 /tmp/RtmpA7fICs/testdata214805bb4bb83.asc</span></span></code></pre></div>
 <p>These results are somewhat easier to parse but still hard to
 interpret. In this case it is clear that the comma is an unexpected
 character. This is because the locale is set to expect “.” as a decimal
 separator by default. This setting (and others, such as date format,
 encoding, etc.) can be changed by supplying a readr locale object using
 <code>readr::locale()</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_comma <span class="ot">=</span> <span class="fu">read_fwf_blaise</span>(datafile2, blafile2, <span class="at">locale =</span> readr<span class="sc">::</span><span class="fu">locale</span>(<span class="at">decimal_mark =</span> <span class="st">&quot;,&quot;</span>))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_comma</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 7</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   A         B     C     D E         F     G</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt; &lt;int&gt; &lt;dbl&gt;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 A         1   2.3   0.1 1         1   1  </span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 B         2   3.4   1.2 2        10  20.2</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 C         3   4.5   0   9        20 100</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>df_comma <span class="ot">=</span> <span class="fu">read_fwf_blaise</span>(datafile2, blafile2, <span class="at">locale =</span> readr<span class="sc">::</span><span class="fu">locale</span>(<span class="at">decimal_mark =</span> <span class="st">&quot;,&quot;</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>df_comma</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 7</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt;   A         B     C     D E         F     G</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt; &lt;int&gt; &lt;dbl&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; 1 A         1   2.3   0.1 1         1   1  </span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; 2 B         2   3.4   1.2 2        10  20.2</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; 3 C         3   4.5   0   9        20 100</span></span></code></pre></div>
 </div>
 <div id="numbered-enums" class="section level3">
 <h3>Numbered enums</h3>
@@ -466,41 +466,41 @@ overwritten by using the option <code>numbered_enum = FALSE</code>. If
 the resulting dataframe is written back to blaise using
 <code>write_fwf_blaise</code> it will however write the integers in the
 set 1,2,3 instead of 1,2,9.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_enum <span class="ot">=</span> <span class="fu">read_fwf_blaise</span>(datafile2, blafile2, <span class="at">locale =</span> readr<span class="sc">::</span><span class="fu">locale</span>(<span class="at">decimal_mark =</span> <span class="st">&quot;,&quot;</span>), <span class="at">numbered_enum =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_enum</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 7</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   A         B     C     D E           F     G</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;   &lt;int&gt; &lt;dbl&gt;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 A         1   2.3   0.1 Male        1   1  </span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 B         2   3.4   1.2 Female     10  20.2</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 C         3   4.5   0   Unknown    20 100</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>df_enum <span class="ot">=</span> <span class="fu">read_fwf_blaise</span>(datafile2, blafile2, <span class="at">locale =</span> readr<span class="sc">::</span><span class="fu">locale</span>(<span class="at">decimal_mark =</span> <span class="st">&quot;,&quot;</span>), <span class="at">numbered_enum =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>df_enum</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 × 7</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt;   A         B     C     D E           F     G</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;   &lt;int&gt; &lt;dbl&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; 1 A         1   2.3   0.1 Male        1   1  </span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; 2 B         2   3.4   1.2 Female     10  20.2</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; 3 C         3   4.5   0   Unknown    20 100</span></span></code></pre></div>
 </div>
 <div id="output-options" class="section level3">
 <h3>output options</h3>
 <p>Finally, instead of reading the file into memory, a LaF object can be
 returned instead. For details see the documentation for the
 <code>LaF</code> package.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_laf <span class="ot">=</span> <span class="fu">read_fwf_blaise</span>(datafile1, blafile1, <span class="at">output =</span> <span class="st">&quot;laf&quot;</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_laf</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Connection to fixed width ASCII file</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Filename: /tmp/RtmpnRzJMW/testdata12662052fe00.asc</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Column 1: name = A, type = string, internal type = character, column width = 1</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Column 2: name = B, type = integer, internal type = integer, column width = 1</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Column 3: name = C, type = double, internal type = numeric, column width = 3</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Column 4: name = D, type = double, internal type = numeric, column width = 3</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Column 5: name = E, type = integer, internal type = integer, column width = 1</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Column 6: name = F, type = integer, internal type = integer, column width = 2</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Column 7: name = G, type = double, internal type = numeric, column width = 6</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>df_laf<span class="sc">$</span>E</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Column number 5 of fixed width ASCII file</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Filename: /tmp/RtmpnRzJMW/testdata12662052fe00.asc</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Column name = E</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Column type = integer</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Internal type = integer</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Column width = 1</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Showing first 10 elements:</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] Male   Female Male  </span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Levels: Male Female</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>df_laf <span class="ot">=</span> <span class="fu">read_fwf_blaise</span>(datafile1, blafile1, <span class="at">output =</span> <span class="st">&quot;laf&quot;</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>df_laf</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; Connection to fixed width ASCII file</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt;   Filename: /tmp/RtmpA7fICs/testdata114803f6b3703.asc</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt;   Column 1: name = A, type = string, internal type = character, column width = 1</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt;   Column 2: name = B, type = integer, internal type = integer, column width = 1</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt;   Column 3: name = C, type = double, internal type = numeric, column width = 3</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt;   Column 4: name = D, type = double, internal type = numeric, column width = 3</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt;   Column 5: name = E, type = integer, internal type = integer, column width = 1</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt;   Column 6: name = F, type = integer, internal type = integer, column width = 2</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt;   Column 7: name = G, type = double, internal type = numeric, column width = 6</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>df_laf<span class="sc">$</span>E</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt; Column number 5 of fixed width ASCII file</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt;   Filename: /tmp/RtmpA7fICs/testdata114803f6b3703.asc</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt;   Column name = E</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt;   Column type = integer</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt;   Internal type = integer</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt;   Column width = 1</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">#&gt; Showing first 10 elements:</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a><span class="co">#&gt; [1] Male   Female Male  </span></span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a><span class="co">#&gt; Levels: Male Female</span></span></code></pre></div>
 </div>
 </div>
 <div id="writing-blaise-datafiles" class="section level2">
@@ -508,15 +508,15 @@ returned instead. For details see the documentation for the
 <p>Dataframes can also be written out as blaise datafiles. By default
 this will also write a corresponding blaise datamodel with the same
 filename and a .bla extension</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>outfile <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.asc&quot;</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>outbla <span class="ot">=</span> <span class="fu">sub</span>(<span class="st">&quot;.asc&quot;</span>, <span class="st">&quot;.bla&quot;</span>, outfile)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write_fwf_blaise</span>(df, outfile)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">read_lines</span>(outfile)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;A12.30.11 1  1.0&quot; &quot;B23.41.2210 20.2&quot; &quot;C34.50.0120100.0&quot;</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">read_lines</span>(outbla)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;DATAMODEL df&quot;     &quot;FIELDS&quot;           &quot;  A : STRING[1]&quot;  &quot;  B : INTEGER[1]&quot;</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;  C : REAL[3]&quot;    &quot;  D : REAL[3]&quot;    &quot;  E : (Male,&quot;     &quot;       Female)&quot;  </span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;  F : INTEGER[2]&quot; &quot;  G : REAL[5]&quot;    &quot;ENDMODEL&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>outfile <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.asc&quot;</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>outbla <span class="ot">=</span> <span class="fu">sub</span>(<span class="st">&quot;.asc&quot;</span>, <span class="st">&quot;.bla&quot;</span>, outfile)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">write_fwf_blaise</span>(df, outfile)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">read_lines</span>(outfile)</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; [1] &quot;A12.30.11 1  1.0&quot; &quot;B23.41.2210 20.2&quot; &quot;C34.50.0120100.0&quot;</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">read_lines</span>(outbla)</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;DATAMODEL df&quot;     &quot;FIELDS&quot;           &quot;  A : STRING[1]&quot;  &quot;  B : INTEGER[1]&quot;</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;  C : REAL[3]&quot;    &quot;  D : REAL[3]&quot;    &quot;  E : (Male,&quot;     &quot;       Female)&quot;  </span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;  F : INTEGER[2]&quot; &quot;  G : REAL[5]&quot;    &quot;ENDMODEL&quot;</span></span></code></pre></div>
 <p>As can be seen, this is equivalent to the input data and model. An
 optional name for the datamodel can be given with
 <code>output_model</code> or the writing of a model can be entirely
@@ -536,41 +536,41 @@ character first)</li>
 the numbered enum type. One way to solve this is by providing an
 existing datamodel and using <code>write_fwf_blaise_with_model</code> as
 follows.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>outfile_model <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.asc&quot;</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_fwf_blaise_with_model</span>(df_enum, outfile_model, blafile2)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">read_lines</span>(outfile_model)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;A12.30.11 1  1.00&quot; &quot;B23.41.2210 20.20&quot; &quot;C34.50.0920100.00&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>outfile_model <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.asc&quot;</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">write_fwf_blaise_with_model</span>(df_enum, outfile_model, blafile2)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">read_lines</span>(outfile_model)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;A12.30.11 1  1.00&quot; &quot;B23.41.2210 20.20&quot; &quot;C34.50.0920100.00&quot;</span></span></code></pre></div>
 <p>This results in the same datafile here, but ensures conformity to the
 datamodel. One could for instance also force a different model on the
 same data.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">=</span> <span class="st">&quot;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">  DATAMODEL Test</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">  FIELDS</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">  A     : (A, B, C)</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">  B     : (Male (1), Female (2), Unknown (3))</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st">  ENDMODEL</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="st">  &quot;</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>blafile3 <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="st">&#39;testbla3&#39;</span>, <span class="at">fileext =</span> <span class="st">&#39;.bla&#39;</span>)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(model3, <span class="at">con =</span> blafile3)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>outfile_new_model <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.asc&quot;</span>)</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">write_fwf_blaise_with_model</span>(df_enum, outfile_new_model, blafile3)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">read_lines</span>(outfile_new_model)</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;11&quot; &quot;22&quot; &quot;33&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>model3 <span class="ot">=</span> <span class="st">&quot;</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="st">  DATAMODEL Test</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="st">  FIELDS</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="st">  A     : (A, B, C)</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="st">  B     : (Male (1), Female (2), Unknown (3))</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="st">  ENDMODEL</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="st">  &quot;</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>blafile3 <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="st">&#39;testbla3&#39;</span>, <span class="at">fileext =</span> <span class="st">&#39;.bla&#39;</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="fu">writeLines</span>(model3, <span class="at">con =</span> blafile3)</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>outfile_new_model <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.asc&quot;</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="fu">write_fwf_blaise_with_model</span>(df_enum, outfile_new_model, blafile3)</span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">read_lines</span>(outfile_new_model)</span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co">#&gt; [1] &quot;11&quot; &quot;22&quot; &quot;33&quot;</span></span></code></pre></div>
 <p>This explicitly checks for conformity, so if the data can not be
 converted an error will be shown and nothing will be written to
 disk.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">=</span> <span class="st">&quot;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="st">  DATAMODEL Test</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="st">  FIELDS</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="st">  A     : (A, B)</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="st">  B     : (Male (1), Female (2))</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="st">  ENDMODEL</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="st">  &quot;</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>blafile4 <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="st">&#39;testbla4&#39;</span>, <span class="at">fileext =</span> <span class="st">&#39;.bla&#39;</span>)</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(model4, <span class="at">con =</span> blafile4)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>outfile_wrong_model <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.asc&quot;</span>)</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="fu">write_fwf_blaise_with_model</span>(df_enum, outfile_wrong_model, blafile4)</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in cast_type(variables(model)[zonder_dummy][[i]], df[[i]]): numbers in dataframe column (A;B;C) do not correspond to range of indices in model (A;B) for variable A</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>model4 <span class="ot">=</span> <span class="st">&quot;</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="st">  DATAMODEL Test</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="st">  FIELDS</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="st">  A     : (A, B)</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="st">  B     : (Male (1), Female (2))</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="st">  ENDMODEL</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="st">  &quot;</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>blafile4 <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="st">&#39;testbla4&#39;</span>, <span class="at">fileext =</span> <span class="st">&#39;.bla&#39;</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="fu">writeLines</span>(model4, <span class="at">con =</span> blafile4)</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>outfile_wrong_model <span class="ot">=</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">&quot;.asc&quot;</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="fu">write_fwf_blaise_with_model</span>(df_enum, outfile_wrong_model, blafile4)</span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="co">#&gt; Error in cast_type(variables(model)[zonder_dummy][[i]], df[[i]]): numbers in dataframe column (A;B;C) do not correspond to range of indices in model (A;B) for variable A</span></span></code></pre></div>
 </div>
 
 

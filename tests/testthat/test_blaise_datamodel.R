@@ -518,6 +518,19 @@ Datamodel Test
   expect_true(length(model_names(bla)) == 1)
   expect_equivalent(model_names(bla), 'A')
   expect_equivalent(model_types(bla), c('STRING'))
+
+  model = "
+      Datamodel Test
+    Fields
+  A     : String[9]
+      Endmodel
+  "
+
+  blafile = makeblafile(model)
+  expect_silent({bla = read_model(blafile)})
+  expect_true(length(model_names(bla)) == 1)
+  expect_equivalent(model_names(bla), 'A')
+  expect_equivalent(model_types(bla), c('STRING'))
 })
 
 test_that("DUMMY variables are accepted", {
@@ -655,6 +668,23 @@ test_that("numbered enums accept secondary text", {
   expect_equivalent(model_levels(bla)[[1]], c(1, 2, 9))
   expect_equivalent(model_labels(bla)[[2]], c('Male', 'Female', 'Unknown'))
   expect_equivalent(model_levels(bla)[[2]], c(1, 2, 9))
+})
+
+test_that("field names can contain special names", {
+  model = "
+  DATAMODEL Test
+  FIELDS
+    testfields : string[3]
+    isced97fields3\"oude isced tydelyk\"   :string[3]
+    ditiseendatamodel : string[3]
+  ENDMODEL
+  "
+
+  blafile = makeblafile(model)
+  expect_silent({bla = read_model(blafile)})
+  expect_equivalent(model_names(bla), c('testfields', 'isced97fields3', 'ditiseendatamodel'))
+  expect_equivalent(model_types(bla), c('STRING','STRING','STRING'))
+  expect_equivalent(model_widths(bla), c(3,3,3))
 })
 
 test_that("Custom Types can be read", {
