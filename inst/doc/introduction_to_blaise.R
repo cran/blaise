@@ -98,7 +98,7 @@ outfile_new_model = tempfile(fileext = ".asc")
 write_fwf_blaise_with_model(df_enum, outfile_new_model, blafile3)
 readr::read_lines(outfile_new_model)
 
-## ---- error=TRUE--------------------------------------------------------------
+## ----error=TRUE---------------------------------------------------------------
 model4 = "
   DATAMODEL Test
   FIELDS
